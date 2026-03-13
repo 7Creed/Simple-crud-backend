@@ -1,21 +1,3 @@
-# services:
-#   - type: web
-#     name: simple-crud-backend
-#     runtime: node
-#     plan: free
-#     autoDeploy: true
-#     buildCommand: npm ci && npm run build
-#     startCommand: npm start
-#     envVars:
-#       - key: NODE_VERSION
-#         value: 20
-#       - key: NODE_ENV
-#         value: production
-#       - key: JWT_SECRET
-#         generateValue: true
-#       - key: DB_FILE_PATH
-#         value: data/db.json
-
 services:
   - type: web
     name: simple-crud-backend
