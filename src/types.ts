@@ -4,6 +4,7 @@ export interface UserRecord {
   email: string;
   passwordHash: string;
   createdAt: string;
+  role: 'admin' | 'user';
 }
 
 export interface DatabaseSchema {
