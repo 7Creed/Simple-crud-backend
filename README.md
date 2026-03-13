@@ -122,17 +122,27 @@ That is acceptable for training/demo usage, but not for production.
 
 This repo includes:
 
+- `index.html` (Swagger UI at site root)
 - `docs/index.html`
 - `docs/openapi.yaml`
 - GitHub Action workflow at `.github/workflows/deploy-docs.yml`
 
-To enable:
+To enable (recommended: deploy from branch):
 
 1. Push to `main`.
-2. In GitHub repository settings, enable Pages using GitHub Actions.
-3. Workflow publishes docs automatically.
-4. Students can view docs at your Pages URL, typically:
+2. In GitHub repository `Settings -> Pages`:
+
+- Source: `Deploy from a branch`
+- Branch: `main`
+- Folder: `/ (root)`
+
+3. Students can view docs at your Pages URL, typically:
    - `https://<username>.github.io/<repo-name>/`
+
+Alternative:
+
+- You can also set Source to `GitHub Actions` to publish from `docs/` using `.github/workflows/deploy-docs.yml`.
+- With this mode, use the same root URL above (not `/docs`).
 
 ## Example Requests
 
