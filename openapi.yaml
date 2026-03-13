@@ -7,7 +7,7 @@ info:
 servers:
   - url: http://localhost:4000
     description: Local
-  - url: https://your-render-service.onrender.com
+  - url: https://simple-crud-backend-6o49.onrender.com
     description: Render
 tags:
   - name: Auth
