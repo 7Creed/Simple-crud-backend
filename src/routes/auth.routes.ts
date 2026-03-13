@@ -7,6 +7,7 @@ import { getDb } from '../db/database';
 import {
   requireAuth,
   AuthenticatedRequest,
+  AuthorizedRequest,
 } from '../middleware/auth.middleware';
 import { loginSchema, registerSchema } from '../validators/auth.validator';
 
@@ -75,12 +76,13 @@ router.post('/register', async (req, res) => {
     email: normalizedEmail,
     passwordHash,
     createdAt: new Date().toISOString(),
+    role: 'user' as const,
   };
 
   db.data.users.push(user);
   await db.write();
 
-  const token = signAuthToken({ userId: user.id });
+  const token = signAuthToken({ userId: user.id, role: user.role });
 
   res.status(201).json({
     message: 'Registration successful',
@@ -89,6 +91,7 @@ router.post('/register', async (req, res) => {
       id: user.id,
       name: user.name,
       email: user.email,
+      role: user.role,
       createdAt: user.createdAt,
     },
   });
@@ -123,7 +126,7 @@ router.post('/login', async (req, res) => {
     return;
   }
 
-  const token = signAuthToken({ userId: user.id });
+  const token = signAuthToken({ userId: user.id, role: user.role ?? 'user' });
 
   res.status(200).json({
     message: 'Login successful',
@@ -132,14 +135,16 @@ router.post('/login', async (req, res) => {
       id: user.id,
       name: user.name,
       email: user.email,
+      role: user.role ?? 'user',
       createdAt: user.createdAt,
     },
   });
 });
 
 router.get('/me', requireAuth, async (req: AuthenticatedRequest, res) => {
+  const { userId } = req as AuthorizedRequest;
   const db = await getDb();
-  const user = db.data.users.find((item) => item.id === req.userId);
+  const user = db.data.users.find((item) => item.id === userId);
 
   if (!user) {
     res.status(404).json({ message: 'User not found' });
@@ -151,6 +156,7 @@ router.get('/me', requireAuth, async (req: AuthenticatedRequest, res) => {
       id: user.id,
       name: user.name,
       email: user.email,
+      role: user.role ?? 'user',
       createdAt: user.createdAt,
     },
   });

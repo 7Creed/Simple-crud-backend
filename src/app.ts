@@ -6,6 +6,7 @@ import path from 'node:path';
 import swaggerUi from 'swagger-ui-express';
 import YAML from 'yamljs';
 import authRoutes from './routes/auth.routes';
+import adminRoutes from './routes/admin.routes';
 
 const app = express();
 
@@ -19,6 +20,7 @@ app.get('/health', (_req, res) => {
 });
 
 app.use('/api/v1/auth', authRoutes);
+app.use('/api/v1/admin', adminRoutes);
 
 const openapiPath = path.resolve(process.cwd(), 'openapi.yaml');
 const openapiSpec = YAML.load(openapiPath);
